@@ -104,3 +104,40 @@ mvn clean package
 java -jar chatting-kafka-0.1.0.jar
 ```
 * This will start the server on http://localhost:8080
+
+
+
+# Used  technology
+* jquery
+* Websocket(sockjs + stomp)
+* Spring-boot
+* kafka(Message Queue)
+* Zookeeper
+
+
+# Architecture 
+* The following image shows what happens when you make a request to a service.
+
+
+![Architecture ](http://postfiles2.naver.net/MjAxNzA2MzBfMjUx/MDAxNDk4ODAzNjQ3Nzky.wCsHuIqmNucj8HkFednyjYTXmvzQmFELjiNiocJywQcg.15ulcx8zNf_7HRXU9bYHAtOkqmj8mpUR8uBhq3YGs74g.PNG.jjiinn45/app2.PNG?type=w3 "Architecture ")
+
+# Work Flow
+* The Websocket(STOMP message) is used between the web browser and the server in this application.
+* The server uses the kafka message queue.
+1. When user A input a message through a web browser and transmits it as a STOMP message to the server.
+2. When the server receives the STOMP message, it puts it in the kafka broker topic via the kafka producer.
+3. kafka Consumer pulls a new message into the topic, and send it through websocket.
+4. User B receive messages coming via websocket.
+
+
+# Message(STOMP)
+* The service will accept messages containing a name in a STOMP message whose body is a JSON object. If the message given is "Hi~ Bread!!, How are u?", then the message might look something like this:
+
+```json
+{
+  "user": "Seunghoon-Oh",
+  "message": "Hi~ Bread!!, How are u?"
+}
+```
+# 
+
